@@ -5,7 +5,7 @@ getgenv().Ancestor_Loaded = false
 local SupportedExecutors = {'Synapse X', 'ScriptWare', 'Krnl', 'Valyse', 'Fluxus'}
 local Supported = table.find(SupportedExecutors, Executor) ~= nil
 
-assert(Supported, Executor)
+assert(Supported, 'not support')
 
 repeat task.wait() until game:IsLoaded() and game.Players.LocalPlayer and game.Players.LocalPlayer:FindFirstChild('PlayerGui') and game.Players.LocalPlayer.PlayerGui:FindFirstChild('OnboardingGUI') and game.Players.LocalPlayer.PlayerGui.OnboardingGUI.DoOnboarding.Loaded.Value
 
