@@ -1,4 +1,3 @@
-
 local library = {
     flags = {}
 }
@@ -7,6 +6,7 @@ local Players = game:GetService "Players"
 local Player = Players.LocalPlayer
 local Mouse = Player:GetMouse()
 local UserInputService = game:GetService "UserInputService"
+local TweenService = game:GetService "TweenService"
 
 local Current = nil
 local function ChangeTab(Holder)
@@ -25,13 +25,13 @@ end
 local minimized = false
 local function UIMinimize()
     if minimized then
-        game.TweenService:Create(game.CoreGui.DarkX.Main,
+        TweenService:Create(game.CoreGui.DarkX.Main,
             TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut), {
                 Size = UDim2.new(0, 480, 0, 293)
             }):Play()
         minimized = false
     else
-        game.TweenService:Create(game.CoreGui.DarkX.Main,
+        TweenService:Create(game.CoreGui.DarkX.Main,
             TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut), {
                 Size = UDim2.new(0, 0, 0, 0)
             }):Play()
@@ -154,14 +154,17 @@ function library:new(Name)
     Close.Size = UDim2.new(0, 38, 0, 39)
     Close.ZIndex = 5
     Close.Font = Enum.Font.SourceSansBold
-    Close.Text = "X"
+    Close.Text = "" -- Set text to empty
     Close.TextColor3 = Color3.fromRGB(255, 255, 255)
     Close.TextSize = 20.000
+    Close.Image = "rbxassetid://9007621457" -- Example Close Icon ID (replace with your own)
+    Close.ImageColor3 = Color3.fromRGB(255, 255, 255)
+    Close.ScaleType = Enum.ScaleType.Fit
     Close.MouseButton1Down:Connect(function()
-        game.TweenService:Create(Main, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut), {
+        TweenService:Create(Main, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut), {
             Size = UDim2.new(0, 0, 0, 0)
         }):Play()
-        wait(0.5)
+        task.wait(0.5)
         DarkX:Destroy()
     end)
 
@@ -188,9 +191,12 @@ function library:new(Name)
     Open.Position = UDim2.new(0.00829315186, 0, 0.31107837, 0)
     Open.Size = UDim2.new(0, 61, 0, 32)
     Open.Font = Enum.Font.SourceSans
-    Open.Text = "close/open"
+    Open.Text = "" -- Set text to empty
     Open.TextColor3 = Color3.fromRGB(255, 255, 255)
     Open.TextSize = 14.000
+    Open.Image = "rbxassetid://9007621460" -- Example Open Icon ID (replace with your own)
+    Open.ImageColor3 = Color3.fromRGB(255, 255, 255)
+    Open.ScaleType = Enum.ScaleType.Fit
     Open.Active = true
     Open.Draggable = true
     Open.MouseButton1Click:Connect(function()
@@ -639,7 +645,7 @@ function library:new(Name)
                         Input.Text = keyTxt
                         return
                     end
-                    wait()
+                    task.wait()
                     bindKey = Enum.KeyCode[keyName]
                     Input.Text = shortNames[keyName] or keyName
                 end)
@@ -980,7 +986,7 @@ function library:new(Name)
                     Open()
                 end)
                 Search:GetPropertyChangedSignal("Text"):Connect(function()
-                    wait()
+                    task.wait()
                     if not open then
                         return
                     end
@@ -1052,6 +1058,4 @@ function library:new(Name)
         return Sections
     end
 
-    return Tabs
-end
-return library
+    return library
